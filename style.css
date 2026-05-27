@@ -1,0 +1,141 @@
+
+/* ===== 全体（若苗色ベース） ===== */
+body {
+    margin: 0;
+    font-family: sans-serif;
+    background: #f3fbf6; /* 若苗色の淡い背景 */
+    text-align: center;
+    color: #222;
+}
+
+/* ===== ヘッダー（若苗色濃いめ） ===== */
+header {
+    background: #66bb6a; /* 若苗色 */
+    color: white;
+    padding: 20px;
+}
+
+/* ナビ */
+nav {
+    margin-top: 10px;
+}
+
+nav a {
+    color: white;
+    margin: 0 10px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* ===== セクション ===== */
+section {
+    padding: 50px 20px;
+}
+
+/* 見出し（若苗色強調） */
+h2 {
+    margin-bottom: 20px;
+    color: #388e3c;
+}
+
+/* 説明文 */
+p {
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.8;
+}
+
+/* リスト */
+ul {
+    list-style-position: inside;
+    padding: 0;
+}
+
+/* ===== 太字（アズール） ===== */
+strong, b {
+    color: #1e88e5; /* アズール */
+    font-weight: bold;
+}
+
+/* ===== カルーセル ===== */
+.carousel-container {
+    position: relative;
+    overflow: hidden;
+    max-width: 800px;
+    margin: 30px auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(102, 187, 106, 0.25);
+}
+
+/* 横スライド */
+.carousel {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+/* スライド */
+.slide {
+    min-width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* 画像 */
+.slide img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+/* カルーセルボタン */
+button.prev,
+button.next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(102, 187, 106, 0.8);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 50%;
+    font-size: 18px;
+}
+
+button.prev:hover,
+button.next:hover {
+    background: #388e3c;
+}
+
+/* ===== ボタン（相談・依頼） ===== */
+.button-wrap {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.btn {
+    display: inline-block;
+    background: #66bb6a;
+    color: white;
+    padding: 14px 24px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    min-width: 180px;
+    transition: 0.2s;
+}
+
+.btn:hover {
+    background: #388e3c;
+    transform: translateY(-2px);
+}
+
+/* ===== フッター ===== */
+footer {
+    margin-top: 50px;
+    padding: 30px;
+    background: #eaf6ec;
+}
