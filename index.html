@@ -1,198 +1,645 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>高大連携学生プロジェクト</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>高大連携学生プロジェクト</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    <link rel="stylesheet" href="style.css">
+    :root {
+      --green: #66bb6a;
+      --green-dark: #388e3c;
+      --green-light: #dcedc8;
+      --green-bg: #f3fbf6;
+      --green-footer: #e8f5e9;
+      --blue: #1e88e5;
+      --text: #222;
+      --white: #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: var(--green-bg);
+      color: var(--text);
+      line-height: 1.8;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: var(--green);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      box-shadow: 0 2px 12px rgba(56,142,60,0.2);
+    }
+
+    .header-title {
+      font-size: 1.05rem;
+      color: var(--white);
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: 0.03em;
+    }
+
+    nav { display: flex; gap: 1.5rem; }
+
+    nav a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 700;
+      opacity: 0.9;
+      transition: opacity 0.2s;
+      position: relative;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0; right: 0;
+      height: 2px;
+      background: var(--white);
+      transform: scaleX(0);
+      transition: transform 0.2s;
+    }
+
+    nav a:hover { opacity: 1; }
+    nav a:hover::after { transform: scaleX(1); }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(150deg, var(--green-dark) 0%, var(--green) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 50% at 50% 40%, rgba(255,255,255,0.07) 0%, transparent 70%);
+    }
+
+    .hero-inner { position: relative; max-width: 680px; }
+
+    .hero-badge {
+      display: inline-block;
+      border: 1px solid rgba(255,255,255,0.5);
+      color: var(--green-light);
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      padding: 0.35rem 1.2rem;
+      border-radius: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(1.8rem, 4.5vw, 3rem);
+      color: var(--white);
+      font-weight: 700;
+      line-height: 1.4;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 span { color: var(--green-light); }
+
+    .hero-desc {
+      color: rgba(255,255,255,0.8);
+      font-size: 1rem;
+      max-width: 460px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn-white {
+      background: var(--white);
+      color: var(--green-dark);
+      padding: 0.8rem 2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-white:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+
+    .btn-outline-white {
+      border: 2px solid rgba(255,255,255,0.6);
+      color: var(--white);
+      padding: 0.8rem 2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 700;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .btn-outline-white:hover {
+      border-color: var(--white);
+      background: rgba(255,255,255,0.1);
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255,255,255,0.4);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .scroll-hint::after {
+      content: '';
+      width: 1px;
+      height: 36px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+      animation: scrollLine 1.8s ease-in-out infinite;
+    }
+
+    @keyframes scrollLine {
+      0%, 100% { opacity: 0; transform: scaleY(0); transform-origin: top; }
+      50% { opacity: 1; transform: scaleY(1); }
+    }
+
+    /* ===== COMMON SECTION ===== */
+    section { padding: 6rem 2rem; }
+
+    .container { max-width: 900px; margin: 0 auto; }
+
+    .section-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 0.5rem;
+      font-weight: 400;
+    }
+
+    h2 {
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      color: var(--green-dark);
+      margin-bottom: 0.75rem;
+      font-weight: 700;
+    }
+
+    .section-divider {
+      width: 40px;
+      height: 3px;
+      background: var(--green);
+      border-radius: 2px;
+      margin-bottom: 2.5rem;
+    }
+
+    /* ===== VISION ===== */
+    #vision { background: var(--white); text-align: left; }
+
+    .vision-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .vision-text p {
+      color: #555;
+      margin-bottom: 1.5rem;
+    }
+
+    .vision-keywords {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .keyword {
+      background: var(--green);
+      color: var(--white);
+      padding: 0.45rem 1.1rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .keyword strong, .keyword b { color: var(--white); }
+
+    .vision-card {
+      background: var(--green-bg);
+      border-radius: 16px;
+      padding: 2.5rem;
+      text-align: center;
+      border: 2px solid var(--green-light);
+    }
+
+    .vision-icon { font-size: 3rem; margin-bottom: 1rem; }
+
+    .vision-card p {
+      color: var(--green-dark);
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    /* ===== ACTIVITY ===== */
+    #activity { background: var(--green-bg); text-align: left; }
+
+    .activity-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .activity-card {
+      background: var(--white);
+      border: 1px solid var(--green-light);
+      border-radius: 14px;
+      padding: 2rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .activity-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(102,187,106,0.2);
+    }
+
+    .activity-icon {
+      width: 52px;
+      height: 52px;
+      background: var(--green-bg);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--green-light);
+    }
+
+    .activity-card h3 {
+      color: var(--green-dark);
+      font-size: 1rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .activity-card p { color: #666; font-size: 0.9rem; }
+
+    /* ===== REPORT ===== */
+    #report { background: var(--white); text-align: left; }
+
+    .carousel-container {
+      position: relative;
+      max-width: 850px;
+      margin: 0 auto;
+    }
+
+    .carousel {
+      display: flex;
+      gap: 1.5rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      border-radius: 15px;
+    }
+
+    .carousel::-webkit-scrollbar { display: none; }
+
+    .slide {
+      flex: 0 0 calc(50% - 0.75rem);
+      scroll-snap-align: start;
+      background: var(--green-bg);
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--green-light);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .slide:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 28px rgba(102,187,106,0.2);
+    }
+
+    .slide img {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .slide-body { padding: 1.25rem; }
+
+    .slide h3 {
+      color: var(--green-dark);
+      font-size: 0.95rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .slide p { color: #666; font-size: 0.85rem; }
+
+    .carousel-nav {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .prev, .next {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2px solid var(--green);
+      background: transparent;
+      cursor: pointer;
+      font-size: 1rem;
+      color: var(--green-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .prev:hover, .next:hover {
+      background: var(--green);
+      color: var(--white);
+    }
+
+    /* ===== CONTACT ===== */
+    #contact { background: var(--green-bg); text-align: left; }
+
+    .button-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .btn {
+      display: block;
+      background: var(--green);
+      color: var(--white);
+      padding: 2rem 1.5rem;
+      border-radius: 14px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.05rem;
+      text-align: center;
+      transition: background 0.2s, transform 0.2s;
+      border: 2px solid transparent;
+    }
+
+    .btn:hover {
+      background: var(--green-dark);
+      transform: translateY(-3px);
+    }
+
+    .btn-icon { font-size: 2rem; display: block; margin-bottom: 0.75rem; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--green-footer);
+      padding: 3rem 2rem;
+      text-align: center;
+      border-top: 2px solid var(--green-light);
+    }
+
+    footer img.logo {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      margin: 0 auto 1.25rem;
+      border: 3px solid var(--green);
+    }
+
+    footer p { color: #555; font-size: 0.9rem; }
+
+    footer a {
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    footer a:hover { text-decoration: underline; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      nav { display: none; }
+      .vision-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .activity-grid { grid-template-columns: 1fr; }
+      .slide { flex: 0 0 85%; }
+      .button-wrap { grid-template-columns: 1fr; }
+      header { padding: 0 1rem; }
+    }
+  </style>
 </head>
-
 <body>
 
-    <!-- ===== ヘッダー ===== -->
+  <!-- ===== HEADER ===== -->
+  <header>
+    <a href="#" class="header-title">高大連携学生プロジェクト</a>
+    <nav>
+      <a href="#vision">活動理念</a>
+      <a href="#activity">活動内容</a>
+      <a href="#report">活動報告</a>
+      <a href="#contact">お問い合わせ</a>
+    </nav>
+  </header>
 
-    <header>
-
-        <h1>高大連携学生プロジェクト</h1>
-
-        <nav>
-            <a href="#vision">活動理念</a>
-            <a href="#activity">活動内容</a>
-            <a href="#report">活動報告</a>
-            <a href="#contact">お問い合わせ</a>
-        </nav>
-
-    </header>
-
-    <!-- ===== 活動理念 ===== -->
-
-    <section id="vision">
-
-        <h2>活動理念</h2>
-
-        <p>
-            高校生のより良い進路選択のため、
-            <strong>「情報格差是正」</strong>と
-            <strong>「キャリア支援」</strong>
-            を目的として活動しています。
-        </p>
-
-    </section>
-
-    <!-- ===== 活動内容 ===== -->
-
-    <section id="activity">
-
-        <h2>活動内容</h2>
-
-        <ul>
-            <li>春夏のオープンキャンパスでの体験授業</li>
-            <li>受験生相談会</li>
-            <li>高校への訪問授業</li>
-        </ul>
-
-    </section>
-
-    <!-- ===== 活動報告 ===== -->
-
-    <section id="report">
-
-        <h2>活動報告</h2>
-
-        <div class="carousel-container">
-
-            <button class="prev">&#10094;</button>
-
-            <div class="carousel">
-
-                <!-- 1枚目 -->
-
-                <div class="slide">
-
-                    <img src="images/motoishikawa.jpg" alt="元石川高校">
-
-                    <h3>2026年5月 訪問授業</h3>
-
-                    <p>
-                        元石川高校にて立教型リーダーシップの体験授業を行いました。
-                    </p>
-
-                </div>
-
-                <!-- 2枚目 -->
-
-                <div class="slide">
-
-                    <img src="images/recruitgassyuku.jpg" alt="交流会">
-
-                    <h3>2026年4月 リクルート合宿</h3>
-
-                    <p>
-                        新メンバーの選考を行いました。
-                    </p>
-
-                </div>
-
-                <!-- 3枚目 -->
-
-                <div class="slide">
-
-                    <img src="images/haruocan.jpg" alt="オープンキャンパス">
-
-                    <h3>2026年3月 春オープンキャンパス開催</h3>
-
-                    <p>
-                        体験授業とキャンパスツアーを実施しました。
-                    </p>
-
-                </div>
- <!-- 4枚目 -->
-
-    <div class="slide">
-
-        <img src="images/jukensoudan.jpg" alt="受験生相談会">
-
-        <h3>2025年12月　受験生相談会</h3>
-
-        <p>
-            高校生向けに受験生相談会を実施しました。
-        </p>
-
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-badge">高大連携学生プロジェクト</div>
+      <h1>高校生の未来に、<br><span>本物の選択肢</span>を。</h1>
+      <p class="hero-desc">
+        情報格差を是正し、一人ひとりの進路選択を支援する。<br>
+        高大連携から生まれる、新しいキャリア支援の形。
+      </p>
+      <div class="hero-cta">
+        <a href="#contact" class="btn-white">受験生相談はこちら</a>
+        <a href="#activity" class="btn-outline-white">活動内容を見る</a>
+      </div>
     </div>
+    <div class="scroll-hint">SCROLL</div>
+  </section>
 
-</div>
+  <!-- ===== VISION ===== -->
+  <section id="vision">
+    <div class="container">
+      <div class="vision-grid">
+        <div class="vision-text">
+          <p class="section-label">Our Vision</p>
+          <h2>活動理念</h2>
+          <div class="section-divider"></div>
+          <p>
+            高校生のより良い進路選択のため、大学生が持つリアルな情報と経験を届けることを使命としています。
+          </p>
+          <p>
+            受験情報や大学生活のリアルを、同じ目線で共有することで、高校生が自信を持って未来を選べるようサポートします。
+          </p>
+          <div class="vision-keywords">
+            <span class="keyword">情報格差是正</span>
+            <span class="keyword">キャリア支援</span>
+          </div>
+        </div>
+        <div class="vision-card">
+          <div class="vision-icon">🌱</div>
+          <p>高校生×大学生が<br>つながる場をつくる</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <!-- ===== ACTIVITY ===== -->
+  <section id="activity">
+    <div class="container">
+      <p class="section-label">What We Do</p>
+      <h2>活動内容</h2>
+      <div class="section-divider"></div>
+      <div class="activity-grid">
+        <div class="activity-card">
+          <div class="activity-icon">🎓</div>
+          <h3>体験授業</h3>
+          <p>春・夏のオープンキャンパスにて、大学の学びを実際に体験できる授業を実施しています。</p>
+        </div>
+        <div class="activity-card">
+          <div class="activity-icon">💬</div>
+          <h3>受験生相談会</h3>
+          <p>受験に関するリアルな疑問に、現役大学生がワンオンワンで答えます。</p>
+        </div>
+        <div class="activity-card">
+          <div class="activity-icon">🏫</div>
+          <h3>高校への訪問授業</h3>
+          <p>学校に直接伺い、進路選択に役立つワークショップ・授業を届けます。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== REPORT ===== -->
+  <section id="report">
+    <div class="container">
+      <p class="section-label">Activities</p>
+      <h2>活動報告</h2>
+      <div class="section-divider"></div>
+      <div class="carousel-container">
+        <div class="carousel" id="carousel">
+          <div class="slide">
+            <img src="images/motoishikawa.jpg" alt="元石川高校">
+            <div class="slide-body">
+              <h3>2026年5月 訪問授業</h3>
+              <p>元石川高校にて立教型リーダーシップの体験授業を行いました。</p>
             </div>
-
-            <button class="next">&#10095;</button>
-
+          </div>
+          <div class="slide">
+            <img src="images/recruitgassyuku.jpg" alt="リクルート合宿">
+            <div class="slide-body">
+              <h3>2026年4月 リクルート合宿</h3>
+              <p>新メンバーの選考を行いました。</p>
+            </div>
+          </div>
+          <div class="slide">
+            <img src="images/haruocan.jpg" alt="春オープンキャンパス">
+            <div class="slide-body">
+              <h3>2026年3月 春オープンキャンパス開催</h3>
+              <p>体験授業とキャンパスツアーを実施しました。</p>
+            </div>
+          </div>
+          <div class="slide">
+            <img src="images/jukensoudan.jpg" alt="受験生相談会">
+            <div class="slide-body">
+              <h3>2025年12月 受験生相談会</h3>
+              <p>高校生向けに受験生相談会を実施しました。</p>
+            </div>
+          </div>
         </div>
-
-    </section>
-
-    <!-- ===== お問い合わせ ===== -->
-
-    <section id="contact">
-
-        <h2>お問い合わせ</h2>
-
-        <div class="button-wrap">
-
-            <!-- 受験生相談 -->
-
-            <a href="https://docs.google.com/forms/d/xxxxxxx/viewform"
-               target="_blank"
-               class="btn">
-
-                受験生相談窓口
-
-            </a>
-
-            <!-- 出張授業依頼 -->
-
-            <a href="https://docs.google.com/forms/d/yyyyyyy/viewform"
-               target="_blank"
-               class="btn">
-
-                出張授業依頼
-
-            </a>
-
+        <div class="carousel-nav">
+          <button class="prev" onclick="scrollCarousel(-1)">&#10094;</button>
+          <button class="next" onclick="scrollCarousel(1)">&#10095;</button>
         </div>
+      </div>
+    </div>
+  </section>
 
-    </section>
+  <!-- ===== CONTACT ===== -->
+  <section id="contact">
+    <div class="container">
+      <p class="section-label">Contact</p>
+      <h2>お問い合わせ</h2>
+      <div class="section-divider"></div>
+      <div class="button-wrap">
+        <a href="https://docs.google.com/forms/d/xxxxxxx/viewform" target="_blank" class="btn">
+          <span class="btn-icon">📝</span>
+          受験生相談窓口
+        </a>
+        <a href="https://docs.google.com/forms/d/yyyyyyy/viewform" target="_blank" class="btn">
+          <span class="btn-icon">🏫</span>
+          出張授業依頼
+        </a>
+      </div>
+    </div>
+  </section>
 
-    <!-- ===== フッター ===== -->
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <img src="images/logo.jpg" alt="ロゴ" class="logo">
+    <p>
+      Instagram：
+      <a href="https://instagram.com/rikkyo_koupro" target="_blank">@rikkyo_koupro</a>
+    </p>
+    <p style="margin-top:1rem; font-size:0.8rem; color:#aaa;">© 2026 高大連携学生プロジェクト</p>
+  </footer>
 
-    <footer>
+  <script>
+    function scrollCarousel(dir) {
+      const c = document.getElementById('carousel');
+      const slide = c.querySelector('.slide');
+      c.scrollBy({ left: dir * (slide.offsetWidth + 24), behavior: 'smooth' });
+    }
 
-        <!-- 丸ロゴ -->
+    // フェードイン
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
 
-        <img src="images/logo.jpg"
-             alt="ロゴ"
-             class="logo">
-
-        <p>
-
-            Instagram：
-
-            <a href="https://instagram.com/アカウント名"
-               target="_blank">
-
-                @rikkyo_koupro
-
-            </a>
-
-        </p>
-
-    </footer>
-
-    <!-- ===== JavaScript ===== -->
-
-    <script src="script.js"></script>
-
+    document.querySelectorAll('.activity-card, .slide, .btn, .vision-card').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      observer.observe(el);
+    });
+  </script>
 </body>
-
 </html>
