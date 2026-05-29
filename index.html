@@ -219,7 +219,28 @@
       border-radius: 2px;
       margin-bottom: 2.5rem;
     }
+    /* ===== ABOUT ===== */
+    #about {
+      background: var(--green-bg);
+      text-align: left;
+    }
 
+    .about-box {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 2.5rem;
+      border: 1px solid var(--green-light);
+      box-shadow: 0 4px 20px rgba(102,187,106,0.08);
+    }
+
+    .about-box p {
+      color: #555;
+      margin-bottom: 1.5rem;
+    }
+
+    .about-box p:last-child {
+      margin-bottom: 0;
+    }
     /* ===== VISION ===== */
     #vision { background: var(--white); text-align: left; }
 
@@ -459,8 +480,6 @@
       header { padding: 0 1rem; }
     }
   </style>
-<meta name="description" content="立教大学経営学部の学生による高大連携プロジェクト。高校生の進路選択を支援するため、受験生相談・訪問授業・オープンキャンパスを実施しています。">
-<meta name="keywords" content="立教大学, 立教経営, 高大連携, 高校生, 進路相談, 受験相談, キャリア支援, 学生プロジェクト">
 </head>
 <body>
 
@@ -491,7 +510,31 @@
     </div>
     <div class="scroll-hint">SCROLL</div>
   </section>
+  <!-- ===== ABOUT ===== -->
+  <section id="about">
+    <div class="container">
+      <p class="section-label">About Us</p>
+      <h2>高プロとは</h2>
+      <div class="section-divider"></div>
 
+      <div class="about-box">
+        <p>
+          高プロは、立教大学経営学部の公認学生団体です。
+        </p>
+
+        <p>
+          高校生に立教経営のリアルな雰囲気を伝えることを目的に、
+          オープンキャンパスでの体験授業や高校訪問授業、
+          受験生相談会などの活動を行っています。
+        </p>
+
+        <p>
+          現役大学生だからこそ伝えられる経験や視点を通して、
+          高校生の進路選択をサポートしています。
+        </p>
+      </div>
+    </div>
+  </section>
   <!-- ===== VISION ===== -->
   <section id="vision">
     <div class="container">
@@ -607,7 +650,7 @@
         </a>
       </div>
     </div>
-  </section>
+ </section>
 
   <!-- ===== FOOTER ===== -->
   <footer>
